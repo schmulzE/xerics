@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  @apply bg-[#030303] text-white box-border;
+  overflow-y: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-blue-500 rounded-xl;
+}
+
+.task > ::-webkit-scrollbar-thumb {
+  @apply bg-sky-500 rounded-xl;
+}
+
+/*
+ * scroll bar styling
+ */
+ /* *::-webkit-scrollbar {
+  width: 3px;
+} */
+
+/* Track */
+/* *::-webkit-scrollbar-track {
+  background: #f1f1f1;
+} */
+
+/* Handle */
+/* *::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+} */
+
+/* Handle on hover */
+/* *::-webkit-scrollbar-thumb:hover {
+  background: rgb(217 215 215);
+} */
+
+/* ::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(179, 174, 174, 0.5);
+} */

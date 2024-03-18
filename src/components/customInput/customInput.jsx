@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-// import { X } from "react-feather";
-
 import "./customInput.css";
 
 function CustomInput(props) {
@@ -27,32 +25,42 @@ function CustomInput(props) {
   };
 
   return (
-    <div className="custom-input">
+    <div className="w-full">
       {isCustomInput ? (
         <form
-          className={`custom-input-edit ${editClass ? editClass : ""}`}
+          className={`form-control ${editClass ? editClass : ""}`}
           onSubmit={submission}
         >
-          <input
+          {placeholder == "Enter description" ? (
+            <textarea 
+            placeholder={placeholder}
+            className="outline-none border p-2 text-sm w-full" 
+            name="comment" 
+            id="comment" 
+            rows="2"
+            defaultValue={inputText}
+            >
+          </textarea>
+          ) :(<input
             type="text"
-            value={inputText}
+            defaultValue={inputText}
             placeholder={placeholder || text}
             onChange={(event) => setInputText(event.target.value)}
             autoFocus
-            className="bg-mainBackgroundColor border-mainBackgroundColor hover:bg-mainBackgroundColor"
-          />
-          <div className="flex space-x-2">
-            <button className="btn btn-md bg-columnBackgroundColor hover:bg-columnBackgroundColor text-gray-100 px-8" type="submit">{buttonText || "Add"}</button>
-        <a onClick={() => setIsCustomInput(false)} className="btn btn-md bg-columnBackgroundColor hover:bg-columnBackgroundColor text-gray-100 px-8">cancel</a>
+            className="input bg-base-100 w-full input-sm rounded-sm"
+          />)}
+          <div className="flex space-x-2 mt-4">
+            <button className="btn btn-sm px-8" type="submit">{buttonText || "Add"}</button>
+            <a onClick={() => setIsCustomInput(false)} className="btn btn-sm  px-8">cancel</a>
           </div>
         </form>
       ) : (
-        <p
-          className={`custom-input-display ${displayClass ? displayClass : ""}`}
+        <button
+          className={`p-1 ${displayClass ? displayClass : ""}`}
           onClick={() => setIsCustomInput(true)}
         >
           {text}
-        </p>
+        </button>
       )}
     </div>
   );

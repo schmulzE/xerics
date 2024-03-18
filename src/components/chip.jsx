@@ -1,11 +1,12 @@
-import { X } from "react-feather";
-
 export default function Chip(props) {
   const { item, removeLabel } = props;
+
+  const customBackgroundColor = `rgba(${parseInt(item.color.slice(-6, -4), 16)}, ${parseInt(item.color.slice(-4, -2), 16)}, ${parseInt(item.color.slice(-2), 16)}, 0.2)`; // Convert hexadecimal color to RGBA with 0.5 opacity
+
   return (
-    <label className="badge" style={{ backgroundColor: item.color, color: "#fff" }}>
-      {item.text}
-      {removeLabel && <X onClick={() => removeLabel(item)} />}
+    <label className="badge rounded-sm m-1" style={{ backgroundColor: customBackgroundColor, color: item.color}}>
+      <span className="text-sm">{item.text}</span>
+      {removeLabel && <i className="pi pi-times text-sm mx-1 " onClick={() => removeLabel(item)} />}
     </label>
   );
 }

@@ -1,53 +1,37 @@
-import ReactDOM from 'react-dom/client'
-import Root from "./routes/root";
-import CreateProject from "./routes/createProject";
-import Project from "./routes/project";
-import Dashboard from "./routes/dashboard/dashboard";
-import SignIn from './routes/signin';
-
-import './index.css'
-
+import './index.css';
+import App from './App';
+import store from './store';
 import 'primeicons/primeicons.css';
-        
+import { Provider } from 'react-redux';
+import ReactDOM from 'react-dom/client';
+import { persistStore } from "redux-persist";
+import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from '../context/themeContext';
+import { PersistGate } from 'redux-persist/integration/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import DashboardLayout from './layout/dashboardLayout';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-  },
-  {
-    path: "/dashboard",
-    element: <DashboardLayout />,
-    children: [
-      {
-        path: "",
-        element: <CreateProject />,
-      },
-      {
-        path: "/dashboard/:projectId",
-        element: <Dashboard />,
-      },
-    ]
-  },
-  {
-    path: "/signin",
-    element: <SignIn />,
-  },
-  {
-    path: "project/:projectId",
-    element: <Project />,
-  },
-]);
-
+let persistor = persistStore(store);
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Optional: configure default query settings
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      refetchOnWindowFocus: false,
+    }
+  }
+})
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-
-    <RouterProvider router={router}/>
-
+  <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <App />
+          <Toaster />
+        </PersistGate>
+      </Provider>
+    </QueryClientProvider>
+  </ThemeProvider>
 )

@@ -1,35 +1,51 @@
-import{ useState, createContext, useContext, useEffect} from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
-const ThemeContext = createContext(undefined);
+const initialState = {
+  theme: "light",
+  setTheme: () => null,
+}
 
-const ThemeProvider = ({children}) => {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light');
+const ThemeProviderContext = createContext(initialState)
 
-  useEffect(() => {
+export function ThemeProvider({
+  children,
+  defaultTheme = "light",
+  storageKey = "vite-ui-theme",
+  ...props
+}) {
+  const [theme, setTheme] = useState(() => (localStorage.getItem(storageKey)) || defaultTheme)
+
+
+    useEffect(() => {
     localStorage.setItem('theme', theme);
     const localTheme = localStorage.getItem('theme');
     document.querySelector('html').setAttribute('data-theme', localTheme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(prevState =>  (prevState ==  'light' ? 'dark' : 'light'));
+  const value = {
+    theme,
+    setTheme: (theme) => {
+      if (typeof theme !== 'string') {
+        return;
+      }
+      localStorage.setItem(storageKey, theme)
+      setTheme(theme)
+    },
   }
 
   return (
-    <ThemeContext.Provider value={{theme, toggleTheme}}>
+    <ThemeProviderContext.Provider {...props} value={value}>
       {children}
-    </ThemeContext.Provider>
+    </ThemeProviderContext.Provider>
   )
 }
 
-function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-}
-
-
 // eslint-disable-next-line react-refresh/only-export-components
-export { ThemeProvider, useTheme};
+export const useTheme = () => {
+  const context = useContext(ThemeProviderContext)
+
+  if (context === undefined)
+    throw new Error("useTheme must be used within a ThemeProvider")
+
+  return context
+}

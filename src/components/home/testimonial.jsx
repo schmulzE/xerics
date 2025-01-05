@@ -62,7 +62,7 @@ const Testimonial = () => {
   }, []);
   
   return (
-    <div className="lg:h-auto text-center lg:py-14 py-14 space-y-4 lg:px-24 px-4 bg-base-200">
+    <div id='testimonials' className="lg:h-auto text-center lg:py-14 py-14 space-y-4 lg:px-24 px-4 bg-base-200">
       <div className='lg:grid lg:grid-cols-2 lg:items-center space-y-8 lg:space-y-0 mb-8'>
         <div className='lg:text-left space-y-4'>
           <span className="text-blue-500 bg-blue-50 font-medium rounded-full text-xs uppercase p-2">testimonials</span>

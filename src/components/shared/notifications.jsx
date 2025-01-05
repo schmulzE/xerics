@@ -1,4 +1,4 @@
-import NoNotification from '@/assets/images/bad.png';
+import NoNotification from '../../../src/assets/images/no-notifications.png';
 
 const Notifications = ({notifications, markAsRead}) => {
 

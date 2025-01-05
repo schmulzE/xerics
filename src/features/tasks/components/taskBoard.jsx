@@ -281,7 +281,7 @@ const TaskBoard = ({
     }
   }
 
-  if(loading) return <div className="flex justify-center content-center items-center"><span className="block loading loading-spinner"></span></div>
+  if(loading) return <div className="flex justify-center content-center items-center"><span className="block pi pi-spin pi-spinner"></span></div>
 
   return (
     <div>

@@ -42,8 +42,8 @@ const InfiniteScrollWithTab = () => {
     // Loading state
     if (isLoading) {
       return (
-        <div className="text-center p-4">
-          <span className='pi pi-spin pi-spinner text-4xl'></span>
+        <div className="text-center p-8 my-auto">
+          <span className='pi pi-spin pi-spinner text-gray-500 text-3xl'></span>
         </div>
       );
     }
@@ -83,7 +83,7 @@ const InfiniteScrollWithTab = () => {
         {/* Infinite Scroll Trigger */}
         {hasNextPage && (
           <div ref={ref} className='text-center' style={{ height: '20px' }}>
-            Loading more...
+            <span className='pi pi-spin pi-spinner text-gray-500 text-3xl'></span>
           </div>
         )}
       </>

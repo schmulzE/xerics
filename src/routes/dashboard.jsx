@@ -7,10 +7,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import CardWrapper from "../components/ui//cardWrapper";
 import { fetchBoards } from "../features/boards/boardsSlice";
 import { fetchProjects } from "../features/projects/projectThunks";
-import ProjectStats from "../features/projects/charts/projectStats";
 import ProjectCard from "../features/projects/components/projectCard";
-import { ProjectProgressChart } from "../features/projects/charts/projectProgressChart";
 import { ProjectRevenue } from "../features/projects/charts/projectRevenue";
+import ProjectStatusOverview from "../features/projects/charts/projectStatusOverview";
+import { ProjectProgressChart } from "../features/projects/charts/projectProgressChart";
 import { ProjectEventCalendar } from "../features/projectEvents/components/projectEventCalendar";
 
 
@@ -146,7 +146,7 @@ const Dashboard = () => {
           <p className="my-2">Take your view of activity</p>
         </div>
       </div>
-      <ProjectStats filteredStatus={'todo'}/>
+      <ProjectStatusOverview filteredStatus={'todo'}/>
       <div className="flex lg:gap-8 gap-6 flex-wrap lg:flex-nowrap">
         <ProjectRevenue/>
         <ProjectProgressChart 
@@ -157,7 +157,7 @@ const Dashboard = () => {
       </div>
       <div className="mt-8 flex flex-wrap lg:flex-nowrap lg:gap-8 gap-6">
         <CardWrapper title="Recent Project" containerClass={'lg:w-1/2 w-full'}>
-          {recentProjects && 
+          {recentProjects ? 
           (<ProjectCard 
           name={recentProjects.name} 
           status={recentProjects.status} 
@@ -167,7 +167,11 @@ const Dashboard = () => {
           statusClass={'mt-2 mr-2'}
           id={recentProjects.id}
           progressValue={calculateProgressValue(recentProjects)}
-          />)}
+          />) : 
+          (<div className="flex justify-center content-center h-full">
+            <p className="m-auto">No recent project</p>
+          </div>)
+          }
         </CardWrapper>
         <CardWrapper title="Daily activities" icon="pi-ellipsis-v" containerClass={'lg:w-1/2 w-full h-60 overflow-auto'}>
           <ProjectEventCalendar 

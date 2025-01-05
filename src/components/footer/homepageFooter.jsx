@@ -13,7 +13,7 @@ export function InputWithButton() {
 
 const Footer = () => {
   return (
-    <div className="lg:px-12 px-4">
+    <div className="lg:px-24 px-4">
       <div className="bg-base-100 text-base-content lg:py-12 py-8 grid lg:grid-cols-2 lg:items-center space-y-4 lg:space-y-0">
         <div className="w-full max-w-sm space-y-4">
           <h1 className="text-3xl capitalize">subscribe</h1>
@@ -31,10 +31,10 @@ const Footer = () => {
       <hr/>
 
       <div className="bg-base-100 py-8 lg:py-12 text-base-content flex lg:flex-row flex-col justify-between lg:items-center">
-        <div className="basis-1/4">
-          <h1 className="text-4xl capitalize">xerics</h1>
+        <div className="basis-1/4 mb-4 md:mb-0">
+          <img src="/src/assets/images/logo.png"/>
         </div>
-        <ul className="grid lg:grid-cols-4 gap-x-8 gap-y-4 font-medium text-sm basis-2/3">
+        <ul className="grid lg:grid-cols-4 gap-x-8 gap-y-4 font-medium text-sm">
           <li>
             <a href="#">About us</a>
           </li>

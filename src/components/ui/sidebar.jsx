@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import supabase from '../../lib/supabase';
 import { useDispatch } from 'react-redux';
@@ -11,7 +10,7 @@ const Sidebar = () => {
   const { theme } =  useTheme();
   const dispatch = useDispatch();
 
-  const links = useState[
+  const links = [
     {
       name:'dashboard',
       icon: 'pi-th-large',
@@ -56,7 +55,7 @@ const Sidebar = () => {
     <>
       <div className='hidden sticky top-0 left-0 h-screen lg:flex flex-col justify-between content-center z-50 w-64 text-center'>
         <div className="mt-4">
-        <div className='p-5 uppercase font-medium'>xerics</div>
+        <img src={ theme  === 'dark' ? '/src/assets/images/logo-dark_mode.png' : '/src/assets/images/logo.png' } className='w-32 py-4 mx-auto'/>
           <ul className="menu w-64 text-gray-500 capitalize space-y-2">
           {links.map((link, index) => (
               <li key={index}>

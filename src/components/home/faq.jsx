@@ -2,7 +2,7 @@
 
 const FAQ = () => {
   return (
-    <div className='grid lg:grid-cols-2 lg:px-24 py-14 px-4'>
+    <div id="faq" className='grid lg:grid-cols-2 lg:px-24 py-14 px-4'>
       <div className="space-y-4 text-center lg:text-left mb-8">
        <span className="text-blue-500 bg-blue-50 font-medium rounded-full text-xs uppercase p-2">faq</span>
        <h2 className="lg:text-5xl text-2xl font-medium">Frequently asked questions</h2>

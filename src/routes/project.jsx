@@ -5,8 +5,8 @@ import { useToast } from '../components/ui/use-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import Breadcrumbs from '../components/ui/breadcrumbs';
 import { fetchProjects } from '../features/projects/projectThunks';
-import ProjectStats from "../features/projects/charts/projectStats";
 import InfiniteScrollWithTab from '../components/ui/infiniteScrollWithTab';
+import ProjectStatusOverview from "../features/projects/charts/projectStatusOverview";
 
 const Project = () => {
   const { toast } = useToast();
@@ -74,7 +74,7 @@ const Project = () => {
           </button>
         </div>
       </div>
-      <ProjectStats filteredStatus={'total projects'} showIcons={false}/>
+      <ProjectStatusOverview filteredStatus={'total projects'} showIcons={false}/>
       <div className='flex flex-col my-8 relative'>
         <InfiniteScrollWithTab/>
       </div>

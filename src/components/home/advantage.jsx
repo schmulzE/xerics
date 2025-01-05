@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { MixerHorizontalIcon, TimerIcon } from "@radix-ui/react-icons";
 
 const Advantage = () => {
@@ -9,7 +10,7 @@ const Advantage = () => {
           <h2 className="text-4xl font-medium lg:w-96">The ultimate solution for any need</h2>
         </div>
         <div className='lg:flex lg:justify-end lg:self-end'>
-          <button className="btn btn-base bg-blue-500 hover:bg-blue-700 text-base-100 capitalize">Explore More</button>
+          <Link to='/signin' className="btn btn-base bg-blue-500 hover:bg-blue-700 text-base-100 capitalize">Explore More</Link>
         </div>
       </div>
 

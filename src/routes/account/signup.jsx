@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import {useState} from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { signUp } from '../../features/auth/authThunks';
 // import supabase  from '../../lib/supabase';
+import { Link, useNavigate } from 'react-router-dom';
+import { signUp } from '../../features/auth/authThunks';
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -48,9 +48,11 @@ export default function SignIn() {
     <div className='bg-base-200 h-screen flex justify-center content-center'>
       <div className="max-w-full w-9/12 flex m-auto lg:mx-auto py-10">
   
-      <div className='hidden lg:flex bg-blue-600 w-1/2 shadow-lg p-24'>
+      <div className='bg-blue-600 w-1/2 shadow-lg p-24 hidden lg:block relative'>
+        <img src='/src/assets/images/logo_icon-white.png' className='w-8 absolute top-6 left-6' />
         <h1 className='text-2xl text-white'>Designed for individuals</h1>
         <p className='text-sm text-base-100 mt-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, sit iste! Voluptates commodi itaque ad!</p>
+        <img src='/src/assets/images/dashboard-slice.png' className=' w-96 absolute bottom-0 right-0' />
       </div>
       <form
         onSubmit={handleSubmit}

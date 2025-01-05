@@ -5,18 +5,19 @@ import { getUser } from '../features/auth/authThunks';
 import { useDispatch, useSelector } from 'react-redux';
 import Breadcrumbs from '../components/ui/breadcrumbs';
 import Modal from '../features/modal/components/modal.jsx';
+import { openModal } from '../features/modal/modalSlice.js';
 import { fetchProjects } from '../features/projects/projectThunks';
-import SearchInputWithIcon from '../components/shared/searchInput.jsx';
-import { closeModal, openModal } from '../features/modal/modalSlice.js';
+import SearchInputWithIcon from '../components/ui/searchInput.jsx';
 import { deleteFileMetadata } from '../features/projectsFiles/projectFilesThunks';
 import ProjectFileList from '../features/projectsFiles/components/projectFileList';
+import { resetProjectFilesState } from '../features/projectsFiles/projectFilesSlice';
 import DeleteFilesForm from "../features/projectsFiles/components/deleteFilesForm.jsx";
 import AddProjectFilesForm from '../features/projectsFiles/components/addProjectFilesForm.jsx';
 import { fetchAllProjectFiles, deleteProjectFiles, addProjectFiles, storeFileMetadata } from '../features/projectsFiles/projectFilesThunks';
 
 const Resources = () => {
   const dispatch = useDispatch();
-  const [query, setSearchTerm] = useState('');
+  const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const auth = useSelector((state) => state.auth.user);
   const [uploadedFiles, setUploadedFiles] = useState([]);
@@ -25,7 +26,6 @@ const Resources = () => {
   const projects = useSelector(state => state.project.projects);
   const loading = useSelector(state => state.projectFiles.loading);
   const projectFiles = useSelector(state => state.projectFiles.projectFiles);
-  // const [filteredFiles, setFilteredFiles] = useState(projectFiles);
   const firstModalOpen = useSelector((state) => state.modal.modals?.['addProjectFiles']?.isOpen);
   const secondModalOpen = useSelector((state) => state.modal.modals?.['deleteFiles']?.isOpen);
   const isModalOpen = firstModalOpen || secondModalOpen;
@@ -46,36 +46,27 @@ const Resources = () => {
   }, [dispatch]);
 
   useEffect(() => {
-   if(auth?.id && projects?.length > 0) {
-    dispatch(fetchAllProjectFiles(auth.id));
-   }
+    dispatch(resetProjectFilesState());
+    if(auth?.id && projects?.length > 0) {
+      dispatch(fetchAllProjectFiles(auth.id));
+    }
   }, [dispatch, projects, auth]);
 
-  // useEffect(() => {
-  //   const results = projectFiles.filter(file => 
-  //     file.name?.toLowerCase().includes(query.toLowerCase()) &&
-  //     (fileTypeFilter === 'all' || file.type.includes(fileTypeFilter))
-  //   );
-  //   setFilteredFiles(results);
-  // }, [projectFiles, query, fileTypeFilter]);
-
   const buttons = [
-    {icon: 'pi pi-upload text-gray-500', class: 'btn-sm btn-ghost btn-circle', onClick: (data) => downloadFile(data)},
-    {icon: 'pi pi-trash text-gray-500', class: 'btn-sm btn-ghost btn-circle', openModal: () => removeFileConfirmation()},
+    {icon: 'pi pi-upload text-gray-500', class: 'btn-sm btn-ghost btn-circle', onClick: (file) => downloadFile(file)},
+    {icon: 'pi pi-trash text-gray-500', class: 'btn-sm btn-ghost btn-circle', onClick: (file) => removeFileConfirmation(file)},
   ]
 
   const removeFile = async (file) => {
     try {
       setIsLoading(true);
-      await dispatch(deleteFileMetadata(file.id)).unwrap()
-      if (file.name && file.project_id) {
-        await dispatch(deleteProjectFiles(file.name, file.project_id)).unwrap()
-      }
+      await dispatch(deleteFileMetadata(file, file.project_id)).unwrap()
+      await dispatch(deleteProjectFiles(file, file.project_id)).unwrap()
+
     } catch (error) {
       throw new Error(error)
     }finally {
       setIsLoading(false)
-      closeModal()
     }
   }
 
@@ -110,22 +101,22 @@ const Resources = () => {
     }
   }
 
-  const removeFileConfirmation = () => {
+  const removeFileConfirmation = (file) => {
     dispatch(openModal({ 
       id: 'deleteFiles',
       title: 'Delete files',
-      // contentType: 'DeleteFilesForm',
-        contentProps: {
-          id: 'deleteFiles',
-          isLoading,
-          removeFile,
-        }
-      })
-    )
+      contentProps: {
+        id: 'deleteFiles',
+        isLoading,
+        removeFile,
+        file
+      }
+    }))
   }
 
-  const renderFileDeleteConfirmation = () => (
-    <DeleteFilesForm 
+  const renderFileDeleteConfirmation = (contentProps) => (
+    <DeleteFilesForm
+    {...contentProps}
     removeFile={removeFile} 
     isLoading={loading}
     />
@@ -162,10 +153,6 @@ const Resources = () => {
     }
 
   }
-
-  const setQuery = (event) => {
-    setSearchTerm(event.target.value);
-  };
 
   const handleFilterChange = (value) => {
     setFileTypeFilter(value);

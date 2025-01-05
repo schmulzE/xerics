@@ -1,6 +1,6 @@
 const Features = () => {
   return (
-    <div className="lg:h-auto text-center py-14 space-y-4 lg:px-24 px-4">
+    <div id='features' className="lg:h-auto text-center py-14 space-y-4 lg:px-24 px-4">
       <div className='lg:grid lg:grid-cols-2 lg:items-center mb-8 space-y-8 lg:space-y-0'>
         <div className='lg:text-left space-y-4'>
           <span className="text-blue-500 bg-blue-50 font-medium rounded-full text-xs uppercase p-2">features</span>

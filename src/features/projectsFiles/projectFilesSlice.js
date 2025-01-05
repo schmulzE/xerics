@@ -20,6 +20,7 @@ const projectFilesSlice = createSlice({
   },
   reducers: {
     resetProjectFilesState: (state) => {
+      state.projectFiles = [],
       state.selectedProjectFiles = null;
       state.loading = false;
       state.error = null;

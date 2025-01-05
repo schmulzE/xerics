@@ -94,9 +94,10 @@ export const deleteProjectFiles = createAsyncThunk(
   async ({files, projectId}, { rejectWithValue }) => {
     try {
       const uploadedFiles = files.map(file => `${projectId}/${file.name}`);
-      const { error } = await supabase.storage
-        .from('project_files')
-        .remove(uploadedFiles);
+      const { error } = await supabase
+      .storage
+      .from('project_files')
+      .remove(uploadedFiles);
   
       if (error) {
         rejectWithValue(error.message);
@@ -125,7 +126,7 @@ export const storeFileMetadata = createAsyncThunk(
         .insert(metadataToSave);
     
       if (error) {
-        console.error('Error storing file metadata:', error);
+        return rejectWithValue(error.message);
       }
     
       return data;
@@ -163,7 +164,7 @@ export const updateFileMetadata = createAsyncThunk(
         .eq('project_id', projectId)
     
       if (error) {
-        console.error('Error storing file metadata:', error);
+        return rejectWithValue(error.message);
       }
     
       return data;
@@ -175,17 +176,17 @@ export const updateFileMetadata = createAsyncThunk(
 
 export const deleteFileMetadata = createAsyncThunk(
   'projectFiles/deleteFileMetadata',
-  async ({uploadedFiles, projectId}, { rejectWithValue }) => {
+  async ({files, projectId}, { rejectWithValue }) => {
     try {
-    
+      const filesId = files.map(file => file.id);
       const { data, error } = await supabase
         .from('project_files')
         .delete()
-        .in('id', uploadedFiles )
+        .in('id', filesId )
         .eq('project_id', projectId);
     
       if (error) {
-        console.error('Error storing file metadata:', error);
+        return rejectWithValue(error.message);
       }
     
       return data;
@@ -204,10 +205,11 @@ export const deleteMultipleFileMetadata = createAsyncThunk(
     
       const { data, error } = await supabase
         .from('project_files')
-        .delete().match({id: metadataToDelete});
+        .delete()
+        .match({ id: metadataToDelete });
     
       if (error) {
-        console.error('Error storing file metadata:', error);
+        return rejectWithValue(error.message);
       }
     
       return data;

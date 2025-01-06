@@ -1,11 +1,18 @@
 import { useDispatch } from 'react-redux';
 import { closeModal } from '../../modal/modalSlice.js';
 
-const DeleteFilesForm = ({removeFile, isLoading, id}) => {
+const DeleteFilesForm = ({ id, file, removeFile, isLoading }) => {
   const dispatch = useDispatch();
 
+  const deleteFileHandler = async (e) => {
+    e.preventDefault();
+    
+    await removeFile(file);
+    dispatch(closeModal({id}));
+  }
+
   return (
-    <form onSubmit={removeFile}>
+    <form onSubmit={deleteFileHandler}>
       <p className='my-4'>Are you sure you want to delete this file!</p>
       <div className='flex justify-end gap-x-2'>
         <button type="submit" className='btn btn-sm rounded-md flex justify-center items-center'>

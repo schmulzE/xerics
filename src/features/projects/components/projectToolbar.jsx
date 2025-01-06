@@ -1,5 +1,5 @@
 import SortComponent from "../../../components/ui/sortComponent";
-import SearchInputWithIcon from "../../../components/shared/searchInput";
+import SearchInputWithIcon from "../../../components/ui/searchInput";
 export default function projectToolbar({ setSortConfig, searchQuery, setSearchQuery}) {
 
   return (

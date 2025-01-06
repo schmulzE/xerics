@@ -204,11 +204,20 @@ export function ProjectRevenue() {
           <h1 className="text-lg font-medium">Revenue</h1>
           <p className="text-xs">your revenue this year</p>
         </div>
-        <div>
+        <div className='flex'>
         {tabs.map((tab, index) => (
           <Button
             key={index}
-            className={`${theme == 'dark' ? 'border-[#191E24]' : null} text-md space-x-2 border text-center pr-2 hidden ${activeTab === tab ? `active ${theme == 'dark' ? 'dark:bg-[#191E24] bg-base-300 text-blue-500' : 'bg-blue-50  text-blue-500'} ` : ''}`}
+            className={
+              `${theme == 'dark' ? 'border-[#191E24]' : null} 
+              text-md space-x-2 border text-center pr-2 hidden lg:block 
+              ${activeTab === tab ? 
+              `active ${theme == 'dark' 
+              ? 'dark:bg-[#191E24] bg-base-300 text-blue-500' : 
+              'bg-blue-50  text-blue-500'
+              } ` 
+              : ''}`
+            }
             iconClassName="tab-icon"
             text={tab}
             onClick={() => handleTabClick(tab)}

@@ -2,9 +2,9 @@ import supabase from '../../../lib/supabase';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 
-export const useInfiniteScroll = (table, pageSize = 10, tab = null, searchQuery) => {
+export const useInfiniteScroll = (table, pageSize = 10, tab = null, searchQuery, sortConfig) => {
   return useInfiniteQuery({
-    queryKey: ['infinite', table, tab, searchQuery],
+    queryKey: ['infinite', table, tab, searchQuery, sortConfig],
     queryFn: async ({ pageParam = 0 }) => {
       let query = supabase
         .from(table)
@@ -18,9 +18,13 @@ export const useInfiniteScroll = (table, pageSize = 10, tab = null, searchQuery)
         query = query.textSearch('name', searchQuery, { type: 'plain' });
       }
 
+      // Apply sorting based on sortConfig
+      const sortColumn = sortConfig.sortBy.toLowerCase();
+      const sortDirection = sortConfig.sortOrder.toLowerCase() === 'ascending';
+
       query = query
         .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
-        .order('created_at', { ascending: false });
+        .order(sortColumn, { ascending: sortDirection });
 
       const { data, error } = await query;
 

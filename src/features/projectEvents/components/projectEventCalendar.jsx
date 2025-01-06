@@ -93,7 +93,7 @@ export const ProjectEventCalendar = ({showEvent = false, events, setEvents, onAd
                   </p>
                 </div>
               </li>
-            )): <div className="text-gray-300">loading...</div>}
+            )): <div className="text-gray-500 text-center">loading...</div>}
           </ul>
         </div>}
 

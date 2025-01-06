@@ -50,11 +50,11 @@ const FileList = ({ files, buttons, selectedFiles, setSelectedFiles, loading}) =
     setSelectedFiles(newSelectedValues);
   }
   
-  // if(files == null || loading) return <div>loading...</div>
+  // if(files == loading) return <div>loading...</div>
 
   return (
     <ul className='flex gap-2'>
-      {files && files.map((file) => (
+      {files.length > 0 ? files.map((file) => (
         <li 
         className="bg-base-100 flex justify-between items-center rounded-md border border-base-300 p-2 w-80" 
         key={file.lastModified || file.id}
@@ -80,7 +80,9 @@ const FileList = ({ files, buttons, selectedFiles, setSelectedFiles, loading}) =
           ))}
           </div>
         </li>
-      ))}
+      )): <div className='text-center p-4 lg:p-16'>
+         <p>No projects files found. Check back later or add a file to an existing project.</p>
+        </div>}
     </ul>
   )
 }

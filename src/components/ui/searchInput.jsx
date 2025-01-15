@@ -7,7 +7,7 @@ const SearchInputWithIcon = ({query, setQuery, placeholder}) => {
       placeholder={placeholder} 
       id="search-project"
       value={query}
-      onChange={(e) => setQuery(e.target.value.trimStart())}
+      onChange={(e) => setQuery(e.target?.value.trimStart())}
       />
     </div>
   )

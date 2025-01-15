@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
-import supabase from '../../lib/supabase';
+import supabase from '../../../lib/supabase';
 import { useEffect, useState } from 'react';
-import Notifications from '../shared/notifications';
+import Notifications from '../notifications.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from '../../features/auth/authThunks';
-import { useTheme } from "../../../context/themeContext";
-import { clearUser } from '../../features/auth/authSlice';
-import Modal from '../../features/modal/components/modal';
-import Avatar from '../../features/users/components/avatar';
-import { openModal } from '../../features/modal/modalSlice.js';
-import { fetchUserProfile } from '../../features/users/usersThunks';
+import { getUser } from '../../../features/auth/authThunks.js';
+import { useTheme } from "../../../../context/themeContext";
+import { clearUser } from '../../../features/auth/authSlice';
+import Modal from '../../../features/modal/components/modal';
+import Avatar from '../../../features/users/components/avatar';
+import { openModal } from '../../../features/modal/modalSlice.js';
+import { fetchUserProfile } from '../../../features/users/usersThunks';
 
 const DashboardNavbar = () => {
   const dispatch = useDispatch();

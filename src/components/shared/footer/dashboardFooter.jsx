@@ -1,8 +1,8 @@
-import supabase from '../../lib/supabase';
+import supabase from '../../../lib/supabase';
 import { NavLink, } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
-import { useTheme } from '../../../context/themeContext';
+import { useTheme } from '../../../../context/themeContext';
 
 
 const replaceSpacesWithHyphen = (text) => text.replace(/\s/g, "-");

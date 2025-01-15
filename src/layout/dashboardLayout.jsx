@@ -6,8 +6,8 @@ import { Navigate, Outlet} from "react-router-dom";
 import {getUser} from '../features/auth/authThunks';
 import { useSelector, useDispatch } from "react-redux";
 import { clearUser } from '../features/auth/authSlice';
-import DashboardNavbar from "../components/navbar/dashboardNavbar";
-import DashboardFooter from "../components/footer/dashboardFooter";
+import DashboardNavbar from "../components/shared/navbar/dashboardNavbar";
+import DashboardFooter from "../components/shared/footer/dashboardFooter";
 
 const DashboardLayout = () => {
   const dispatch = useDispatch();

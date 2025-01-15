@@ -67,12 +67,12 @@ const Sidebar = () => {
                         ? `${
                             theme === 'dark'
                               ? 'bg-[#191E24] hover:bg-[#191E24] text-blue-500 hover:text-blue-500'
-                              : 'bg-blue-100 hover:bg-blue-100 text-blue-500 hover:text-blue-500 '
-                          } border-l-4 border-blue-500 bg-blue-100 text-blue-500`
+                              : 'bg-base-300 hover:bg-base-300 text-blue-500 hover:text-blue-500 '
+                          } border-l-4 border-blue-500 bg-base-300 text-blue-500`
                         : `${
                             theme === 'dark'
                               ? 'hover:bg-[#191E24] text-gray-500 hover:text-blue-500'
-                              : 'hover:bg-blue-100 text-gray-500 hover:text-blue-500'
+                              : 'hover:bg-base-100 text-gray-500 hover:text-blue-500'
                           }`,
                       'rounded-none',
                     ].join(' ')

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import supabase from "../../../lib/supabase";
 import { useParams } from "react-router-dom";
 import CardWrapper from '../../../components/ui/cardWrapper';
-import Messages from '../../../components/messages/messages';
+import ProjectCommentMessages from './projectCommentMessages';
 
 const ProjectComments = () => {
   const [profileCache, setProfileCache] = useState({});
@@ -49,7 +49,7 @@ const ProjectComments = () => {
         <main className="flex relative h-56 w-full flex-1 flex-col items-stretch">
           <div className="h-fit flex-1 overflow-y-auto bg-base-200 comment">
             {projectId && (
-              <Messages
+              <ProjectCommentMessages
                 userId={userId}
                 roomId={projectId}
                 profileCache={profileCache}

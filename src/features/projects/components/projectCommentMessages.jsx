@@ -1,6 +1,6 @@
-import supabase from '../../lib/supabase';
+import supabase from '../../../lib/supabase';
 import { useEffect, useState, useRef } from 'react';
-import { useTheme } from '../../../context/themeContext';
+import { useTheme } from '../../../../context/themeContext';
 
 const Message = ({
   userId,
@@ -45,7 +45,7 @@ const Message = ({
   )
 }
 
-export default function Messages({
+export default function ProjectCommentMessages({
   userId,
   roomId,
   profileCache,

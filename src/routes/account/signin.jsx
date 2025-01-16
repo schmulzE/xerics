@@ -69,7 +69,7 @@ export default function SignIn() {
       <div className='bg-blue-600 w-1/2 shadow-lg p-24 hidden lg:block relative'>
         <img src='/src/assets/images/logo_icon-white.png' className='w-8 absolute top-6 left-6' />
         <h1 className='text-2xl text-white'>Designed for individuals</h1>
-        <p className='text-sm text-base-100 mt-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit, sit iste! Voluptates commodi itaque ad!</p>
+        <p className='text-sm text-base-100 mt-4'>Simple, smart, and scalable. Manage projects of any size with ease using Xerics&apos; flexible and powerful platform</p>
         <img src='/src/assets/images/dashboard-slice.png' className=' w-96 absolute bottom-0 right-0' />
       </div>
       <form
@@ -89,7 +89,7 @@ export default function SignIn() {
                 name="email"
                 onChange={handleChange}
               />
-              <span className="text-xs mt-2">forgoten password?
+              <span className="text-xs mt-2">forgotten password?
                 <button className=' cursor-pointer' onClick={() => setResetPassword(false)}>Login</button>
               </span> 
             </div>
@@ -132,8 +132,8 @@ export default function SignIn() {
               name="password"
               onChange={handleChange}
             />
-            <span className="text-xs mt-2">forgoten password?
-              <button className='cursor-pointer' onClick={() => setResetPassword(true)}>Reset password</button>
+            <span className="text-xs mt-2">forgotten password?
+              <button className='cursor-pointer underline text-blue-500 ml-1' onClick={() => setResetPassword(true)}>Reset password</button>
             </span> 
           </div>
     
@@ -154,9 +154,9 @@ export default function SignIn() {
         )}
   
         
-        <div className="text-xs mt-6 text-center">Dont have an account?
+        <div className="text-xs mt-6 text-center">Don`t have an account?
           <Link to="/signup"> 
-            <span className="text-at-light-green ml-1">Register</span> 
+            <span className="text-blue-500 underline ml-1">Register</span> 
           </Link>
         </div>
       </form>

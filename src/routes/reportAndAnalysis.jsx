@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import ProjectTable from '../features/projects/components/projectTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProjects } from '../features/projects/projectThunks';
-import ProjectBarChart from '../features/projects/charts/projectbarChart';
+import ProjectBarChart from '../features/projects/charts/projectBarChart';
 import ProjectTasksStat from "../features/projects/charts/projectTasksStat";
 import PriorityLevelStat from '../features/projects/charts/priorityLevelStat';
 

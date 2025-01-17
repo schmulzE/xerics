@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Logo from "../../../assets/images/logo.png";
 
 export function InputWithButton() {
   return (
@@ -32,7 +33,7 @@ const Footer = () => {
 
       <div className="bg-base-100 py-8 lg:py-12 text-base-content flex lg:flex-row flex-col justify-between lg:items-center">
         <div className="basis-1/4 mb-4 md:mb-0">
-          <img src="/src/assets/images/logo.png"/>
+          <img src={Logo}/>
         </div>
         <ul className="grid lg:grid-cols-4 gap-x-8 gap-y-4 font-medium text-sm">
           <li>

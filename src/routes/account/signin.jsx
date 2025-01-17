@@ -2,8 +2,10 @@ import {useState} from 'react';
 import supabase from '../../lib/supabase';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { signIn, getUser } from '../../features/auth/authThunks';
 import { useToast } from "@/components/ui/use-toast";
+import { signIn, getUser } from '../../features/auth/authThunks';
+import LogoIconWhite from "../../assets/images/logo_icon-white.png";
+import DashboardSlice from "../../assets/images/dashboard-slice.png";
 
 export default function SignIn() {
   const { toast } = useToast();
@@ -67,10 +69,10 @@ export default function SignIn() {
   
       {/* Login */}
       <div className='bg-blue-600 w-1/2 shadow-lg p-24 hidden lg:block relative'>
-        <img src='/src/assets/images/logo_icon-white.png' className='w-8 absolute top-6 left-6' />
+        <img src={LogoIconWhite} className='w-8 absolute top-6 left-6' />
         <h1 className='text-2xl text-white'>Designed for individuals</h1>
         <p className='text-sm text-base-100 mt-4'>Simple, smart, and scalable. Manage projects of any size with ease using Xerics&apos; flexible and powerful platform</p>
-        <img src='/src/assets/images/dashboard-slice.png' className=' w-96 absolute bottom-0 right-0' />
+        <img src={DashboardSlice} className=' w-96 absolute bottom-0 right-0' />
       </div>
       <form
         onSubmit={resetPassword ? sendResetPassword : handleSubmit}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Logo from "../../../assets/images/logo.png";
 
 const RootNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,7 +9,7 @@ const RootNavbar = () => {
     <nav>
       <div className="navbar w-full lg:py-4 lg:px-24">
       <div className="navbar-start">
-        <img src="/src/assets/images/logo.png"/>
+        <img src={Logo}/>
       </div>
        <div className="navbar-center hidden md:flex lg:flex">
          <ul className="menu menu-horizontal px-1 capitalize">

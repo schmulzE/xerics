@@ -1,52 +1,244 @@
+import { motion } from 'framer-motion';
+import { CheckCircle, Clock, BarChart3, Kanban, Calendar, Users } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import CalendarPage from '../../assets/images/calendar_page.png'
+import ProjectDetailsPage from '../../assets/images/project_details_page.png'
+import AnalysisPage from '../../assets/images/report_page.png'
+
+const features = [
+  {
+    icon: Kanban,
+    title: "Kanban Boards",
+    description: "Visualize your workflow with intuitive drag-and-drop boards",
+    color: "from-blue-500 to-cyan-500",
+  },
+  {
+    icon: Calendar,
+    title: "Smart Calendar",
+    description: "Schedule tasks and track deadlines with our integrated calendar",
+    color: "from-cyan-500 to-blue-600",
+  },
+  {
+    icon: BarChart3,
+    title: "Analytics & Reports",
+    description: "Get insights into your team's productivity and project progress",
+    color: "from-blue-600 to-indigo-600",
+  },
+  {
+    icon: Users,
+    title: "Team Collaboration",
+    description: "Work together seamlessly with real-time updates and notifications",
+    color: "from-indigo-600 to-purple-600",
+  },
+]
+
 const Features = () => {
   return (
-    <div id='features' className="lg:h-auto text-center py-14 space-y-4 lg:px-24 px-4">
-      <div className='lg:grid lg:grid-cols-2 lg:items-center mb-8 space-y-8 lg:space-y-0'>
-        <div className='lg:text-left space-y-4'>
-          <span className="text-blue-500 bg-blue-50 font-medium rounded-full text-xs uppercase p-2">features</span>
-          <h2 className="text-4xl font-medium lg:w-96">Discover our key features</h2>
-        </div>
-        <div className='lg:flex lg:justify-end lg:self-end'>
-          <button className="btn btn-base bg-blue-500 hover:bg-blue-700 text-base-100 capitalize">Explore More</button>
-        </div>
-      </div>
+    <div id='features'>
+      {/* Features Section */}
+      <section id="features" className="py-20 px-4 bg-white">
+        <div className="container mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+              Everything You Need
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Powerful features designed to boost your team&#39;s productivity and streamline project management.
+            </p>
+          </motion.div>
 
-      <div className="grid lg:grid-cols-3">
-        <div className="border rounded-md p-8">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-11 text-purple-500 mx-auto border rounded-full p-2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 0 1 1.037-.443 48.282 48.282 0 0 0 5.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-          </svg>
-          <h3 className="mt-4 mb-2 capitalize text-md font-medium">integrated chat</h3>
-          <p className="text-sm w-full text-center text-gray-500">Lorem, ipsum dolor sit amet consectetur et ties adipisicing elit.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -10 }}
+                className="group"
+              >
+                <Card className="h-full border-blue-100 hover:border-blue-200 transition-all duration-300 hover:shadow-xl">
+                  <CardHeader>
+                    <div
+                      className={`w-12 h-12 rounded-lg bg-gradient-to-r ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      <feature.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <CardTitle className="text-xl text-gray-800">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-gray-600 leading-relaxed">{feature.description}</CardDescription>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </div>
-        <div className="border rounded-md p-8">
-          <svg className="size-11 text-orange-500 rounded-full p-2 border mx-auto" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <rect x="4" y="4" width="6" height="16" rx="2" />  <rect x="14" y="4" width="6" height="10" rx="2" /></svg>
-          <h3 className="mt-4 mb-2 capitalize text-md  font-medium">multiple view</h3>
-          <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur et ties adipisicing elit.</p>
+      </section>
+
+      {/* Detailed Features */}
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Kanban Boards That Actually Work</h3>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                Create custom workflows, drag and drop tasks, and visualize your project progress with our intuitive
+                kanban boards. Perfect for agile teams and complex projects.
+              </p>
+              <div className="space-y-4">
+                {[
+                  "Drag & drop interface",
+                  "Custom columns and workflows",
+                  "Real-time collaboration",
+                  "Advanced filtering and search",
+                ].map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center space-x-3"
+                  >
+                    <CheckCircle className="w-5 h-5 text-blue-600" />
+                    <span className="text-gray-700">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-2xl blur-2xl" />
+              <div className="relative bg-white rounded-2xl shadow-xl border border-blue-100 p-6">
+                <img
+                  src={ProjectDetailsPage}
+                  alt="Kanban Board"
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </motion.div>
+          </div>
         </div>
-        <div className="border rounded-md p-8">
-          <i className="pi pi-list text-xl border rounded-full p-2 mx-auto text-purple-500"/>
-          <h3 className="mt-4 mb-2 capitalize text-md font-medium">tasks priority</h3>
-          <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur et ties adipisicing elit.</p>
+      </section>
+
+      {/* Calendar Feature */}
+      <section className="py-20 px-4 bg-white">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative lg:order-2"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-blue-400/20 rounded-2xl blur-2xl" />
+              <div className="relative bg-white rounded-2xl shadow-xl border border-blue-100 p-6">
+                <img
+                  src={CalendarPage}
+                  alt="Calendar View"
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="lg:order-1"
+            >
+              <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Smart Calendar Integration</h3>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                Never miss a deadline again. Our smart calendar syncs with your tasks, shows project timelines, and
+                helps you plan your work efficiently.
+              </p>
+              <div className="space-y-4">
+                {[
+                  "Automatic deadline tracking",
+                  "Team availability overview",
+                  "Meeting scheduling",
+                  "Timeline visualization",
+                ].map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center space-x-3"
+                  >
+                    <Clock className="w-5 h-5 text-cyan-600" />
+                    <span className="text-gray-700">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
-        <div className="border rounded-md p-8">
-          <svg className="border size-11 rounded-full p-2 text-green-500 mx-auto " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="m6.115 5.19.319 1.913A6 6 0 0 0 8.11 10.36L9.75 12l-.387.775c-.217.433-.132.956.21 1.298l1.348 1.348c.21.21.329.497.329.795v1.089c0 .426.24.815.622 1.006l.153.076c.433.217.956.132 1.298-.21l.723-.723a8.7 8.7 0 0 0 2.288-4.042 1.087 1.087 0 0 0-.358-1.099l-1.33-1.108c-.251-.21-.582-.299-.905-.245l-1.17.195a1.125 1.125 0 0 1-.98-.314l-.295-.295a1.125 1.125 0 0 1 0-1.591l.13-.132a1.125 1.125 0 0 1 1.3-.21l.603.302a.809.809 0 0 0 1.086-1.086L14.25 7.5l1.256-.837a4.5 4.5 0 0 0 1.528-1.732l.146-.292M6.115 5.19A9 9 0 1 0 17.18 4.64M6.115 5.19A8.965 8.965 0 0 1 12 3c1.929 0 3.716.607 5.18 1.64" />
-          </svg>
-          <h3 className="mt-4 mb-2 capitalize text-md font-medium">remote ready</h3>
-          <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur et ties adipisicing elit.</p>
+      </section>
+
+      {/* Analytics Feature */}
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-cyan-50">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <h3 className="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Powerful Analytics & Reports</h3>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                Get deep insights into your team&#39;s performance, project progress, and productivity trends. Make
+                data-driven decisions with comprehensive reporting.
+              </p>
+              <div className="space-y-4">
+                {[
+                  "Real-time performance metrics",
+                  "Custom report generation",
+                  "Team productivity insights",
+                  "Project timeline analysis",
+                ].map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center space-x-3"
+                  >
+                    <BarChart3 className="w-5 h-5 text-blue-600" />
+                    <span className="text-gray-700">{item}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-2xl blur-2xl" />
+              <div className="relative bg-white rounded-2xl shadow-xl border border-blue-100 p-6">
+                <img
+                  src={AnalysisPage}
+                  alt="Analytics Dashboard"
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+            </motion.div>
+          </div>
         </div>
-        <div className="border rounded-md p-8">
-          <i className="pi pi-send text-xl border rounded-full p-2 text-pink-500"></i>
-          <h3 className="mt-4 mb-2 capitalize text-md font-medium">easy to use</h3>
-          <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur et ties adipisicing elit.</p>
-        </div>
-        <div className="border rounded-md p-8">
-          <i className="text-xl border rounded-full p-2 mx-auto pi pi-lock text-blue-500"/>
-          <h3 className="mt-4 mb-2 capitalize text-md font-medium">enhance data security</h3>
-          <p className="text-sm text-gray-500">Lorem, ipsum dolor sit amet consectetur et ties adipisicing elit.</p>
-        </div>
-      </div>
+      </section>
     </div>
   )
 }

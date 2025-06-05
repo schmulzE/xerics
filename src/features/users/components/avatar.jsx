@@ -24,7 +24,7 @@ const Avatar = ({avatar, firstname, className, backgroundClass}) => {
        <div className="avatar">
          <div className={className}>
           { avatar ? <img src={avatar} alt="user avatar" /> :
-            <div style={{ backgroundColor: stringToColour(firstname) }} className={backgroundClass +  " flex content-center justify-center items-center flex-1 text-base-100"}>
+            <div style={{ backgroundColor: stringToColour(firstname) }} className={backgroundClass +  " text-center text-base-100"}>
              <div>{getUserInitials(firstname)}</div>
            </div>
           }

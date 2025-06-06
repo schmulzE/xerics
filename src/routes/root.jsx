@@ -1,26 +1,20 @@
-import FAQ from '../components/home/faq';
-import Features from '../components/home/features';
-import Advantage from '../components/home/advantage';
-import Testimonial from "../components/home/testimonial";
-import HeroSection from '../components/home/heroSection';
-import CallToActionBanner from '../components/home/callToActionBanner';
-import CallToActionFooter from '../components/home/callToActionFooter';
-import HomepageFooter from "../components/shared/footer/homepageFooter";
-import HomepageNavbar from "../components/shared/navbar/homepageNavbar";
+import Footer from "@/components/home/footer";
+import Features from "../components/home/features";
+import HeroSection from "../components/home/heroSection";
+import CallToAction from "@/components/home/callToAction";
+import Testimonials from "../components/home/testimonials";
+import Navbar from "../components/home/navbar";
 
-export default function Root() {
+export default function LandingPage() {
 
   return (
-    <>
-      <HomepageNavbar/>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <Navbar />
       <HeroSection/>
-      <Advantage/>
       <Features/>
-      <Testimonial/>
-      <CallToActionBanner/>
-      <FAQ/>
-      <CallToActionFooter/>
-      <HomepageFooter/>
-    </>
-  );
+      <Testimonials/>
+      <CallToAction/>
+      <Footer />
+    </div>
+  )
 }

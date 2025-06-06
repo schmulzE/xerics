@@ -12,8 +12,7 @@ const InfiniteScrollWithTab = () => {
   const [activeTab, setActiveTab] = useState(TABS[0]);
   const [ searchQuery, setSearchQuery ] = useState("");
   const [sortConfig, setSortConfig] = useState({
-    sortBy: 'Alphabetical',
-    sortOrder: 'Ascending'
+    sortBy: 'alphabetical', // Default sort by alphabetical order
   });
   const { 
     data, 
@@ -95,7 +94,7 @@ const InfiniteScrollWithTab = () => {
     <div>
       <div className="flex justify-between">
         {/* Tab Navigation */}
-        <div className="tabs tabs-boxed bg-base-100 border border-gray-300 w-[300] lg:w-[400px] capitalize">
+        <div className="tabs tabs-boxed bg-base-100 border border-gray-300 w-[300] lg:w-[440px] capitalize">
           {TABS.map((tab) => (
             <button
               key={tab}

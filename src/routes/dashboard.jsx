@@ -1,190 +1,171 @@
 /* eslint-disable no-unused-vars */
-import supabase from "../lib/supabase";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import supabase from '../lib/supabase';
+import { useToast } from "@/components/ui/use-toast";
+import { getUser } from '../features/auth/authThunks';
 import { useTheme } from "../../context/themeContext";
-import { getUser } from "../features/auth/authThunks";
+import CardWrapper from "../components/ui/cardWrapper";
 import { useSelector, useDispatch } from 'react-redux';
-import CardWrapper from "../components/ui//cardWrapper";
-import { fetchBoards } from "../features/boards/boardsSlice";
-import { fetchProjects } from "../features/projects/projectThunks";
-import ProjectCard from "../features/projects/components/projectCard";
+import ProjectCard  from "../features/projects/components/projectCard";
+import { setRates, setCounts } from '../features/projects/projectSlice';
 import { ProjectRevenue } from "../features/projects/charts/projectRevenue";
-import ProjectStatusOverview from "../features/projects/charts/projectStatusOverview";
+import { useDashboardData } from "../features/dashboard/hooks/useDashboardData";
+import { DASHBOARD_HEADER } from "../features/dashboard/constants/dashboardConstants";
 import { ProjectProgressChart } from "../features/projects/charts/projectProgressChart";
-import { ProjectEventCalendar } from "../features/projectEvents/components/projectEventCalendar";
-
+import ProjectStatusOverview from "../features/projects/charts/projectStatusOverview";
+import ProjectEventCalendar from "../features/projectEvents/components/projectEventCalendar";
 
 const Dashboard = () => {
   const { theme } = useTheme();
+  const {
+    projects,
+    events,
+    recentProjectImage,
+    getProjectsByStatus,
+    calculateProgress,
+    handleCreateEvent,
+    handleDeleteEvent,
+  } = useDashboardData();
+
+  const { toast } = useToast()
   const dispatch = useDispatch();
-  const [image, setImage] = useState();
-  const [events, setEvents] = useState([]);
   const user = useSelector((state) => state.auth.user);
-  const boards = useSelector(state => state.board.boards);
-  const projects = useSelector(state => state.project.projects);
 
-  useEffect(() => {
-    dispatch(getUser())
-  }, [dispatch])
+  const recentProject = projects[projects.length - 1];
+  const { 
+    finishedProjects, 
+    inProgressProjects, 
+    unfinishedProjects 
+  } = getProjectsByStatus();
 
-  useEffect(() => {
-    // Fetch initial events
-    fetchEvents();
-
-    // Set up real-time subscription
-    const subscription = supabase
-      .channel(`events`)
-      .on('postgres_changes',
-      {
-        event: '*',
-        schema: 'public',
-      }, (payload) => {
-        fetchEvents();
-      })
-      .subscribe()
-
-    return () => {
-      supabase.removeChannel(subscription);
-    };
-  }, []);
-
-  const fetchEvents = async () => {
-    const { data, error } = await supabase
-      .from('events')
-      .select('*')
-      .order('due_date', { ascending: true });
-
-    if (error) {
-      throw new Error('Error fetching events:', error);
-    } else {
-      const formattedEvents = data.map(event => ({
-        id: event.id,
-        title: event.title,
-        date: event.due_date.split('T')[0], // Just take the date part
-      }));
-      setEvents(formattedEvents);
-    }
-  };
-
-  const createEvent = async (title, description, dueDate) => {
-    const { error } = await supabase
-      .from('events')
-      .insert([
-        { title, description, due_date: dueDate, user_id: user.id }
-      ]);
-
-    if (error) {
-      throw new Error('Error creating event:', error);
-    }
-  };
-
-  const deleteEvent = async (eventId) => {
-    const { error } = await supabase
-    .from('events')
-    .delete()
-    .eq('id', eventId);
-
-
-    if (error) {
-      throw new Error('Error deleting event:', error);
-    }
-  };
-
-  const recentProjects =  projects[projects.length - 1];
-
-  const fetchBoardsAndProjects = async (dispatch) => {
-    await dispatch(fetchBoards());
-    await dispatch(fetchProjects());
-  }
-
-  useEffect(() => {
-    fetchBoardsAndProjects(dispatch)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
-
-  
-  const finishedProjects = projects.filter(project => {
-    if(project != null) {
-      project.status == 'Done'
-    }
-  });
-
-  const projectsInProgress = projects.filter(project => {
-    if(project != null) {
-      project.status == 'In Progress'
-    }
-  })
-
-  const projectsUnfinished = projects.filter(project => {
-    if(project != null ){
-      project.status == 'In Review' && project.status == 'Todo'
-    }
-  })
-
-  
-  const calculateProgressValue = (project) => {
-    const board = boards.find(board => board.title === 'Done');
-    const completedTasks = board ? project.tasks.filter(task => task.board_id === board.id) : [];
-    const totalTasks = project.tasks.length;
-    return totalTasks > 0 ? Math.floor((completedTasks.length / totalTasks) * 100) : 0;
-  };
+    const projectCounts = useSelector(state => state.project.counts);
+    const increaseRates = useSelector(state => state.project.rates);
 
   useEffect(() => {
     dispatch(getUser());
-  }, [dispatch]);
-
+  }, [dispatch])
+    
   useEffect(() => {
-    const { data } = supabase.storage.from('project_images').getPublicUrl(recentProjects?.image)
-    setImage(data.publicUrl)
-  },[recentProjects?.image])
+    if (user?.id) {
+      fetchProjects();
+      const subscription = supabase
+        .channel(`projects:profile_id=eq.${user.id}`)
+        .on('postgres_changes', { event: '*', schema: 'public' }, fetchProjects)
+        .subscribe();
+
+      return () => {
+        supabase.removeChannel(subscription);
+      };
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
+    
+    const fetchProjects = async () => {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('*');
+  
+      if (error) {
+        toast({
+          variant: 'destructive', 
+          description: `Error fetching projects. Please try again!`
+        });
+      } else if (data) {
+        updateProjectCounts(data);
+      }
+    };
+
+  const prevCounts = useSelector(state => state.projects?.counts ?? {
+    'in progress': 0,
+    done: 0,
+    'in review': 0,
+    todo: 0,
+    'total projects': 0
+  });
+
+const updateProjectCounts = (projectsData) => {
+  const newCounts = projectsData.reduce((acc, project) => {
+    acc[project.status] = (acc[project.status] || 0) + 1;
+    acc['total projects']++;
+    return acc;
+  }, { 'in progress': 0, done: 0, 'in review': 0, todo: 0, 'total projects': 0 });
+
+  const rates = {};
+  for (const status in newCounts) {
+    const current = newCounts[status];
+    const previous = prevCounts[status] ?? 0;
+    rates[status] = previous === 0
+      ? (current > 0 ? 100 : 0)
+      : parseFloat(((current - previous) / previous * 100).toFixed(2));
+  }
+
+  dispatch(setCounts(newCounts));
+  dispatch(setRates(rates));
+};
+
 
   return (
     <div className="px-4 lg:px-8 pb-24 lg:pb-8">
       <div className="flex justify-between items-center mb-4 lg:mb-0">
         <div>
-          <h1 className="text-3xl font-medium">Dashboard</h1>
-          <p className="my-2">Take your view of activity</p>
+          <h1 className="text-2xl font-semibold lg:text-3xl lg:font-bold">{DASHBOARD_HEADER.title}</h1>
+          <p className="my-2">{DASHBOARD_HEADER.description}</p>
         </div>
       </div>
-      <ProjectStatusOverview filteredStatus={'todo'}/>
+
+      <ProjectStatusOverview 
+      filteredStatus={'todo'} 
+      projectCounts={projectCounts} 
+      increaseRates={increaseRates} 
+      />
+      
       <div className="flex lg:gap-8 gap-6 flex-wrap lg:flex-nowrap">
-        <ProjectRevenue/>
+        <ProjectRevenue />
         <ProjectProgressChart 
-        finishedProjects={finishedProjects.length}
-        projectsInProgress={projectsInProgress.length}
-        projectsUnfinished={projectsUnfinished.length}
+          finishedProjects={finishedProjects}
+          projectsInProgress={inProgressProjects}
+          projectsUnfinished={unfinishedProjects}
         />
       </div>
+
       <div className="mt-8 flex flex-wrap lg:flex-nowrap lg:gap-8 gap-6">
-        <CardWrapper title="Recent Project" containerClass={'lg:w-1/2 w-full'}>
-          {recentProjects ? 
-          (<ProjectCard 
-          name={recentProjects.name} 
-          status={recentProjects.status} 
-          classes={'border border-base-300 p-2'}
-          description={recentProjects.description}
-          imagePath={recentProjects.image}
-          statusClass={'mt-2 mr-2'}
-          id={recentProjects.id}
-          progressValue={calculateProgressValue(recentProjects)}
-          />) : 
-          (<div className="flex justify-center content-center h-full">
-            <p className="m-auto">No recent project</p>
-          </div>)
-          }
+        <CardWrapper 
+          title="Recent Project" 
+          containerClass={'lg:w-1/2 w-full'}
+        >
+          {recentProject ? (
+            <ProjectCard 
+              name={recentProject.name} 
+              status={recentProject.status} 
+              classes={'border border-base-300 p-2'}
+              description={recentProject.description}
+              imagePath={recentProjectImage}
+              statusClass={'mt-2 mr-2'}
+              id={recentProject.id}
+              progressValue={calculateProgress(recentProject)}
+            />
+          ) : (
+            <div className="flex justify-center content-center h-full">
+              <p className="m-auto">No recent project</p>
+            </div>
+          )}
         </CardWrapper>
-        <CardWrapper title="Daily activities" icon="pi-ellipsis-v" containerClass={'lg:w-1/2 w-full h-60 overflow-auto'}>
+
+        <CardWrapper 
+          title="Daily activities" 
+          icon="pi-ellipsis-v" 
+          containerClass={'lg:w-1/2 w-full h-60 overflow-auto'}
+        >
           <ProjectEventCalendar 
-          showEvent={false} 
-          events={events} 
-          setEvents={setEvents} 
-          onAddEvent={createEvent}
-          onDeleteEvent={deleteEvent}
+            showEvent={false} 
+            events={events} 
+            onAddEvent={handleCreateEvent}
+            onDeleteEvent={handleDeleteEvent}
           />
         </CardWrapper>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Dashboard;

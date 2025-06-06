@@ -19,26 +19,37 @@ export default function ProjectBarChart({ projects }) {
   const { theme } = useTheme();
 
   useEffect(() => {
-    const projectCounts = {};
-    projects.forEach(project => {
-      const date = project.created_at.split('T')[0]; // Extract date part
-      projectCounts[date] = (projectCounts[date] || 0) + 1;
-    });
+  const threeMonthsAgo = new Date();
+  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
 
-    const formattedData = Object.entries(projectCounts).map(([date, count]) => ({
+  const projectCounts = {};
+  projects.forEach(project => {
+    const date = project.created_at.split('T')[0];
+    const projectDate = new Date(date);
+
+    if (projectDate >= threeMonthsAgo) {
+      const dateKey = projectDate.toISOString().split('T')[0];
+      projectCounts[dateKey] = (projectCounts[dateKey] || 0) + 1;
+    }
+  });
+
+  const formattedData = Object.entries(projectCounts)
+    .sort(([a], [b]) => new Date(a) - new Date(b))
+    .map(([date, count]) => ({
       date,
-      projects: count
+      projects: count,
     }));
 
-    setChartData(formattedData);
-  }, [projects]);
+  setChartData(formattedData);
+}, [projects]);
+
   
 
   return (
     <Card className={`${theme === 'dark' ? 'bg-base-100 border-none' :'bg-base-100'}`}>
       <CardHeader className="flex flex-col items-stretch space-y-0 p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle className="text-base-content">Bar Chart</CardTitle>
+          <CardTitle className="text-base-content">Recent Projects Trends</CardTitle>
           <CardDescription className="text-base-content">
             Showing total projects for the last 3 months
           </CardDescription>

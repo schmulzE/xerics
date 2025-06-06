@@ -100,7 +100,7 @@ function ProjectTasksStat() {
   return (
     <Card className={`${theme === 'dark' ? 'bg-base-100 border-none' :'bg-white'} w-full lg:w-1/2`}>
       <CardHeader>
-        <CardTitle className="text-base-content">Bar Chart</CardTitle>
+        <CardTitle className="text-base-content">Task Metrics</CardTitle>
         <CardDescription className="text-base-content">{chartData[0]?.month + ' - ' + chartData[chartData.length - 1]?.month} 2024</CardDescription>
       </CardHeader>
       <CardContent>

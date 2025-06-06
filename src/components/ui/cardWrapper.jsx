@@ -16,7 +16,7 @@ const CardWrapper = ({
     <div className={`${containerClass} rounded-lg bg-base-100 p-4`}>
       <div className="flex justify-between items-center">
         <div className="">
-          <h1 className={`text-lg font-medium ${titleClass}`}>{title}</h1>
+          <h1 className={`text-lg font-bold ${titleClass}`}>{title}</h1>
           <h2 className={`${subtitleClass}`}>{subtitle}</h2>
         </div>
         <div className={`${buttonWrapper}`}>

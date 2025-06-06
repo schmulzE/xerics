@@ -40,13 +40,12 @@ export const fetchTasks = createAsyncThunk(
     try {
       const { data, error } = await supabase
       .from('tasks')
-      .select('*, labels(*), subtasks(*)')
+      .select(`*, labels!labels_task_id_fkey(*), subtasks(*)`)
       .eq('project_id', projectId);
 
       if (error) {
         return rejectWithValue(error.message);
       }
-
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -96,10 +95,10 @@ export const updateTaskDate = createAsyncThunk(
 
 export const updateTaskDesc = createAsyncThunk(
   'tasks/updateTaskDesc',
-  async ({desc, id}, { rejectWithValue }) => {
+  async ({description, id}, { rejectWithValue }) => {
     try {
       const { data, error } = await supabase.from('tasks')
-      .update({ desc: desc })
+      .update({ description: description })
       .eq('id', id)
 
       if(error) {

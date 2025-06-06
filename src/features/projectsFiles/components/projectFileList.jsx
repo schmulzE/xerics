@@ -54,7 +54,7 @@ const FileList = ({ files, buttons, selectedFiles, setSelectedFiles, loading}) =
 
   return (
     <ul className='flex gap-2'>
-      {files.length > 0 ? files.map((file) => (
+      {files && files.length > 0 ? files.map((file) => (
         <li 
         className="bg-base-100 flex justify-between items-center rounded-md border border-base-300 p-2 w-80" 
         key={file.lastModified || file.id}

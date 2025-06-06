@@ -23,10 +23,10 @@ const Dropdown = ({
     <div className={`dropdown ${className}`}>
       <button 
         tabIndex={0} 
-        className='p-2 w-24 bg-base-100 rounded-md border border-gray-300'
+        className='p-2 w-24 bg-base-100 rounded-md border border-gray-300 flex items-center gap-x-2'
         onClick={toggleDropdown}
       >
-        <i className='pi pi-sliders-h mx-2 align-middle'></i>
+        <i className='pi pi-sliders-h align-middle'></i>
         <span>Filter</span>
       </button>
       {isOpen && (
@@ -78,7 +78,7 @@ const Dropdown = ({
       {isOpen && (
         <ul 
           tabIndex={0} 
-          className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-48 capitalize"
+          className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-56 -left-40 capitalize"
         >
           {options.map((option, index) => (
             <li key={index}>

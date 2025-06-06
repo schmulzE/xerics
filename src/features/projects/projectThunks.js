@@ -26,7 +26,6 @@ export const fetchProjects = createAsyncThunk(
       if (error) {
         return rejectWithValue(error.message);
       }
-
       return data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -71,7 +70,6 @@ export const updateProject = createAsyncThunk(
       }
       return data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -89,12 +87,10 @@ export const updateProjectStatus = createAsyncThunk(
         .maybeSingle()
 
       if (error) {
-      console.log(error.message);
         return rejectWithValue(error.message);
       }
       return data;
     } catch (error) {
-      console.log(error.message);
       return rejectWithValue(error.message);
     }
   }

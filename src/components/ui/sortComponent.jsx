@@ -8,15 +8,15 @@ function SortComponent({setSortConfig}) {
       type="select"
       icon="pi pi-sort-alt"
       tooltipText="sort by"
-      options={['Alphabetical', 'Due Date']}
+      options={['Alphabetical', 'Due date']}
       onSelect={(selected) => {
         setSortConfig((prev) => {
-          const updated = { ...prev, sortBy: selected };
+          const updated = { ...prev, sortBy: selected.toLowerCase() };
           return updated;
         });
       }}
       />
-      <Dropdown 
+      {/* <Dropdown 
       type="select"
       icon="pi pi-sort-amount-up-alt"
       tooltipText="sort order"
@@ -27,7 +27,7 @@ function SortComponent({setSortConfig}) {
           return updated;
         });
       }}
-      />
+      /> */}
     </div>
   );
 }

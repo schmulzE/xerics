@@ -40,7 +40,6 @@ export const fetchAllProjectContributors = createAsyncThunk(
   }
 );
 
-// Add other async thunks for adding, updating, and deleting project files
 export const addProjectContributor = createAsyncThunk(
   'projectContributors/addProjectContributor',
   async ({selectedContributors, projectId}, { rejectWithValue }) => {

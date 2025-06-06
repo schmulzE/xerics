@@ -55,8 +55,8 @@ function TaskCardInfo(props) {
         <span className="label-text">Description</span>
       </div>
       <CustomInput
-        defaultValue={cardTask.desc}
-        text={cardTask.desc || "Add a Description"}
+        defaultValue={cardTask.description}
+        text={cardTask.description || "Add a Description"}
         placeholder="Enter description"
         onSubmit={updateDesc}
         displayClass={'border w-full max-w-xs text-left text-sm pb-8'}

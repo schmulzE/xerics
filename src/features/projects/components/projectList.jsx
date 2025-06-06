@@ -22,7 +22,7 @@ const ProjectList = ({projects}) => {
   
 
   return (
-    <ul className='flex flex-col lg:flex-row w-full gap-8 mt-16'>
+    <ul className='grid grid-col-1 md:grid-cols-3 lg:grid-col-3 w-full gap-8 mt-16'>
       {projects.map((project) => ( project &&
         <li className="w-80" key={project.id}>
         <ProjectCard

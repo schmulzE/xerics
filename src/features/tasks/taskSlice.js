@@ -5,7 +5,6 @@ const initialState = {
   tasks: [],
   loading: null,
   error: null
-  // Add other initial state properties here
 };
 
 const taskSlice = createSlice({
@@ -18,8 +17,8 @@ const taskSlice = createSlice({
       state.error = null;
     }
   },
-  extraReducers: (builders) => {
-    builders
+  extraReducers: (builder) => {
+    builder
     .addCase(createTask.pending, (state) => {
       state.loading = true;
       state.error = null;
@@ -41,22 +40,21 @@ const taskSlice = createSlice({
       state.loading = false;
       state.tasks = action.payload
     })
-    .addCase(deleteTask.pending, (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+    .addCase(deleteTask.pending, (state) => {
+      state.loading = true;
+      state.error = null;
     })
     .addCase(deleteTask.fulfilled, (state, action) => {
       state.loading = false;
       state.tasks = state.tasks.filter(task => task.id !== action.payload);
     })
     .addCase(deleteTask.rejected, (state, action) => {
-
       state.loading = false;
       state.error = action.payload;
     })
-    .addCase(updateTaskTitle.pending, (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+    .addCase(updateTaskTitle.pending, (state) => {
+      state.loading = true;
+      state.error = null;
     })
     .addCase(updateTaskTitle.fulfilled, (state, action) => {
       state.loading = false;
@@ -68,23 +66,23 @@ const taskSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     })
-    .addCase(updateTaskDesc.pending, (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+    .addCase(updateTaskDesc.pending, (state) => {
+      state.loading = true;
+      state.error = null;
     })
     .addCase(updateTaskDesc.fulfilled, (state, action) => {
       state.loading = false;
       state.tasks = state.tasks.map(task =>
-        task.id === action.payload?.id ? { ...task, desc: action.payload.desc } : task
+        task.id === action.payload?.id ? { ...task, description: action.payload.description } : task
       )
     })
     .addCase(updateTaskDesc.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     })
-    .addCase(updateTaskDate.pending, (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
+    .addCase(updateTaskDate.pending, (state) => {
+      state.loading = true;
+      state.error = null;
     })
     .addCase(updateTaskDate.fulfilled, (state, action) => {
       state.loading = false;

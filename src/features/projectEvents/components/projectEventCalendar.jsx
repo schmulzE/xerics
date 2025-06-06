@@ -11,7 +11,7 @@ import { formatDate } from "@fullcalendar/core/index.js";
 import interactionPlugin from "@fullcalendar/interaction";
 import { closeModal, openModal } from '../../modal/modalSlice.js';
 
-export const ProjectEventCalendar = ({showEvent = false, events, setEvents, onAddEvent, onDeleteEvent, loading}) => {
+const ProjectEventCalendar = ({showEvent = false, events, setEvents, onAddEvent, onDeleteEvent, loading}) => {
   const [ selected, setSelected ] = useState();
   const dispatch = useDispatch();
   const isOpen = useSelector((state) => state.modal.modals?.['addEvent']?.isOpen);
@@ -81,7 +81,7 @@ export const ProjectEventCalendar = ({showEvent = false, events, setEvents, onAd
           <h5 className="text-lg font-semibold mb-4 text-base-content">Events</h5>
           <ul>
             {!loading ? events.map((event) => (
-              <li key={event.id} className={`bg-green-500 my-2.5 rounded`}>
+              <li key={event.id} className={`bg-blue-600 text-white my-2.5 rounded`}>
                 <div className="p-2">
                   <p className="font-bold">{event.title}</p>
                   <p className="text-sm">
@@ -135,3 +135,5 @@ export const ProjectEventCalendar = ({showEvent = false, events, setEvents, onAd
     </div>
   );
 };
+
+export default ProjectEventCalendar;

@@ -16,7 +16,7 @@ const ProjectTransaction = ({transactions}) => {
             <span className="font-medium">{transaction.transaction}</span>
             <span className="text-xs">{transaction.type}</span>
           </div>
-          <span className="text-xs">{transaction.type == "Expenses" ? `-$${transaction.amount}` : `$${transaction.amount}`}</span>
+          <span className="text-xs">{transaction.type == "expense" ? `-$${transaction.amount}` : `$${transaction.amount}`}</span>
         </li>
         )) : <div className='capitalize flex flex-col h-44 justify-center content-center text-sm font-normal'><p className='m-auto'>No transactions made</p></div> }
       </ul>

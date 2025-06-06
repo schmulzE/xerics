@@ -80,7 +80,7 @@ export const options = {
       title: {
         display: true,
         font: {
-          family: 'Rubik',
+          family: 'Source Code Pro',
           size: 16, // Font size
         },
       },
@@ -90,7 +90,7 @@ export const options = {
         max: 2000, // Set the maximum value on the y-axis
         stepSize: 200, // Set the step size (increment) between each tick
         font: {
-          family: 'Rubik', // Change the font family for the y-axis tick labels
+          family: 'Source Code Pro', // Change the font family for the y-axis tick labels
           size: 12, // Change the font size for the y-axis tick labels
         },
       },
@@ -99,7 +99,7 @@ export const options = {
       ticks: {
         // Y-axis scale value configuration goes here
         font: {
-          family: 'Rubik', // Change the font family for the y-axis tick labels
+          family: 'Source Code Pro', // Change the font family for the y-axis tick labels
           size: 12, // Change the font size for the y-axis tick labels
         },
       },

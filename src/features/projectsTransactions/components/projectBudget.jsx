@@ -43,7 +43,7 @@ const ProjectBudget = ({projectContributors, user}) => {
 
   const totalExpenses = selectedTransaction && Array.isArray(selectedTransaction) && selectedTransaction.length > 0
   ? selectedTransaction.reduce((accumulator, transaction) => {
-      if (transaction && transaction.type === "Expenses") {
+      if (transaction && transaction.type === "expense") {
         accumulator += transaction.amount;
       }
       return accumulator;
@@ -53,7 +53,7 @@ const ProjectBudget = ({projectContributors, user}) => {
 
   const totalIncome = selectedTransaction && Array.isArray(selectedTransaction) && selectedTransaction.length > 0
   ? selectedTransaction.reduce((accumulator, transaction) => {
-      if (transaction && transaction.type === "Income") {
+      if (transaction && transaction.type === "income") {
         accumulator += transaction.amount;
       }
       return accumulator;
@@ -61,7 +61,7 @@ const ProjectBudget = ({projectContributors, user}) => {
   : 0;
 
   const progressValue = useMemo(() => {
-    if (!totalExpenses || !totalIncome) return 0;
+    if (totalIncome === 0) return 0;
   
     const percentage = (totalExpenses / totalIncome) * 100;
     return Math.floor(percentage, 100); // Ensures value stays between 0 and 100

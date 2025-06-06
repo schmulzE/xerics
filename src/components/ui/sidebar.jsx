@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
+import { Kanban } from 'lucide-react';
 import supabase from '../../lib/supabase';
 import { useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import Logo from "../../assets/images/logo.png";
 import { useTheme } from '../../../context/themeContext';
 import { clearUser } from '../../features/auth/authSlice';
-import DarkModeLogo from "../../assets/images/logo-dark_mode.png";
-
 
 const Sidebar = () => {
   const { theme } =  useTheme();
@@ -57,7 +55,15 @@ const Sidebar = () => {
     <>
       <div className='hidden sticky top-0 left-0 h-screen lg:flex flex-col justify-between content-center z-50 w-64 text-center'>
         <div className="mt-4">
-        <img src={ theme  === 'dark' ? DarkModeLogo :Logo } className='w-32 py-4 mx-auto'/>
+        {/* <img src={ theme  === 'dark' ? DarkModeLogo :Logo } className='w-32 py-4 mx-auto'/> */}
+        <div className="flex justify-center mx-auto mt-2 mb-6 items-center space-x-2">
+          <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg flex items-center justify-center">
+            <Kanban className="w-5 h-5 text-white" />
+          </div>
+          <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+            xerics
+          </span>
+        </div>
           <ul className="menu w-64 text-gray-500 capitalize space-y-2">
           {links.map((link, index) => (
               <li key={index}>

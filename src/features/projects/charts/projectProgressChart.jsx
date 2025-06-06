@@ -24,14 +24,14 @@ export function ProjectProgressChart({projectsUnfinished, projectsInProgress, fi
         label: '# of Projects',
         data: [ projectsInProgress, finishedProjects, projectsUnfinished],
         backgroundColor: [
-         'rgb(248,102,36)',
-         'rgb(34,202,173)',
-         'rgb(236,72,87)',
+         'rgb(232,196,104)',
+         'rgb(42,157,144)',
+         'rgb(244,162,97)',
         ],
         borderColor: [
-          'rgb(248,102,36)',
-          'rgb(34,202,173)',
-          'rgb(236,72,87)',
+          'rgb(232,196,104)',
+          'rgb(42,157,144)',
+          'rgb(244,162,97)',
         ],
         borderWidth: 1,
       },
@@ -65,27 +65,27 @@ export function ProjectProgressChart({projectsUnfinished, projectsInProgress, fi
       <div className='h-64 flex justify-center'>
         <Pie data={!projectsUnfinished || !projectsInProgress || !finishedProjects ? Emptydataset : data} options={options}/>
       </div>
-      <ul className='flex flex-col text-sm justify-center space-y-2 mt-2'>
-        <li className='flex justify-around'>
-          <div>
-            <span className='inline-block w-4 h-4 bg-[rgb(248,102,36)] rounded-full mr-2'></span>
+      <ul className='flex flex-col text-sm justify-center content-center mx-auto space-y-2 mt-2 w-60'>
+        <li className='flex items-center justify-between w-full'>
+          <div className='flex items-center'>
+            <span className='inline-block w-4 h-4 bg-[rgb(232,196,104)] rounded-full mr-2'></span>
             <span>In progress</span>
           </div>
           <div className='font-bold'>{projectsInProgress}</div>
         </li>
-        <li className='flex justify-around gap-x-9'>
-          <div>
-            <span className='inline-block w-4 h-4 bg-[rgb(34,202,173)] rounded-full mr-2'></span>
+        <li className='flex items-center justify-between w-full'>
+          <div className='flex items-center'>
+            <span className='inline-block w-4 h-4 bg-[rgb(42,157,144)] rounded-full mr-2'></span>
             <span>Done</span>
           </div>
-          <div className='font-bold'>{projectsInProgress}</div>
+          <div className='font-bold'>{finishedProjects}</div>
         </li>
-        <li className='flex justify-around gap-x-2'>
+        <li className='flex items-center justify-between w-full'>
           <div>
-            <span className='inline-block w-4 h-4 bg-[rgb(236,72,87)] rounded-full mr-2'></span>
+            <span className='inline-block w-4 h-4 bg-[rgb(244,162,97)] rounded-full mr-2'></span>
             <span>In Review</span>
           </div>
-          <div className='font-bold'>{finishedProjects}</div>
+          <div className='font-bold'>{projectsUnfinished}</div>
         </li>
       </ul>
     </CardWrapper>

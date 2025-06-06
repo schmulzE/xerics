@@ -1,10 +1,13 @@
 import supabase from "../lib/supabase";
 import { useState, useEffect } from "react";
 import { useMediaQuery } from 'react-responsive';
+import { useToast } from "@/components/ui/use-toast";
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser } from  "../features/auth/authThunks";
-import { ProjectEventCalendar } from "../features/projectEvents/components/projectEventCalendar";
+import  ProjectEventCalendar  from "../features/projectEvents/components/projectEventCalendar";
+
 function Calendar() {
+  const { toast } = useToast();
   const dispatch =  useDispatch();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [events, setEvents] = useState([]);
@@ -35,6 +38,7 @@ function Calendar() {
     return () => {
       supabase.removeChannel(subscription);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchEvents = async () => {
@@ -56,7 +60,10 @@ function Calendar() {
       setEvents(formattedEvents);
     }
     } catch (error) {
-      console.log(error);
+      toast({
+        variant: "destructive",
+        description: "An error occured while fetching event. Please try again.",
+      });
     }finally {
       setLooading(false);
     }
@@ -87,9 +94,12 @@ function Calendar() {
   };
 
   return (
-    <div className="lg:p-8 px-4 pb-28 lg:pb-0">
-      <h1 className="text-3xl font-medium">Calendar</h1>
-      <h4 className="my-2">Full Calendar Interactive Page</h4>
+    <div className="lg:px-8 lg:py-2 px-4 pb-28 lg:pb-8">
+      <div> 
+        <h1 className="text-2xl font-semibold lg:text-3xl lg:font-bold">Calendar</h1>
+        <h4 className="my-2">Full Calendar Interactive Page</h4>
+      </div>
+      
       <div className="max-w-2xl lg:max-w-[850px]">
        {isMobile ? 
        <ProjectEventCalendar

@@ -38,9 +38,9 @@ const Navbar = () => {
               <Link to="/signin" className="border-blue-200 border py-1 px-4 rounded text-blue-600 hover:bg-blue-50">
                 Sign In
               </Link>
-              <Button className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700">
+              <Link to="/signup" className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 p-1.5 rounded text-white">
                 Get Started
-              </Button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}

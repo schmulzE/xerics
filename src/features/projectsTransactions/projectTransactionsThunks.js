@@ -15,7 +15,6 @@ export const fetchAllProjectTransactions = createAsyncThunk(
 
       return data;
     } catch (error) {
-      console.error('Error fetching project transactions:', error.message);
       return rejectWithValue(error.message);
     }
   }

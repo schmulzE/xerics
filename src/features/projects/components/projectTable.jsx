@@ -115,7 +115,7 @@ const ProjectTable = () => {
                   style={{
                     width: `${value}%`,
                     height: '100%',
-                    backgroundColor: '#4CAF50',
+                    backgroundColor: '#2A9D90',
                   }}
                 />
               </div>

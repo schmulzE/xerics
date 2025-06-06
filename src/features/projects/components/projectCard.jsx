@@ -58,7 +58,8 @@ const ProjectCard = ({ id, imagePath, name, description, status, icon, classes, 
           <BudgetProgressbar progressValue={progressValue} title={'progress'}/>
         </div>
       </Link>
-      <div className="mb-4 flex items-center absolute top-3 right-0 ">
+      <div className="mb-4 absolute top-3 right-5">
+        <div className="flex items-center">
         <span className={`rounded-sm text-xs p-1.5 uppercase ${getStatusClasses(status)} ${statusClass}`}>{status}</span>
         <Dropdown 
           type="action"
@@ -73,7 +74,8 @@ const ProjectCard = ({ id, imagePath, name, description, status, icon, classes, 
               onClick: () => deleteProjectHandler(id) 
             }
           ]}
-        />
+          />
+        </div>
       </div>
     </div>
   );

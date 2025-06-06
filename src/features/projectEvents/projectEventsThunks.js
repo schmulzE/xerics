@@ -24,7 +24,6 @@ export const fetchProjectEvents = createAsyncThunk(
 export const addProjectEvent = createAsyncThunk(
   'projectEvents/addProjectEvent',
   async (event, { rejectWithValue }) => {
-    console.log(event)
     try {
       const { data, error } = await supabase.from('project_timeline').insert(event);
       if (error) {

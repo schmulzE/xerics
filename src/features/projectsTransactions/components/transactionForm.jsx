@@ -26,8 +26,8 @@ const TransactionForm = ({handleSubmit, handleChange,cancelTransaction}) => {
       <label htmlFor='type' className='label-text capitalize mt-4 block'>type</label>
       <select name="type" id='type' defaultValue={'Pick one'} onChange={handleChange} className="select select-bordered w-full rounded-none">
         <option disabled defaultValue={'Pick one'}>Pick one</option>
-        <option value={'Income'}>Income</option>
-        <option value={'Expenses'}>Expenses</option>
+        <option value={'income'}>Income</option>
+        <option value={'expense'}>Expense</option>
       </select>
 
       <label htmlFor='amount' className='label-text capitalize mt-4 block'>amount</label>

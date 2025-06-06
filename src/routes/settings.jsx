@@ -1,103 +1,43 @@
-import supabase from '../lib/supabase';
-import { useEffect, useState } from 'react';
-import { useTheme } from "../../context/themeContext";
-import { getUser } from '../features/auth/authThunks';
 import { useSelector, useDispatch } from 'react-redux';
 import CardWrapper from '../components/ui/cardWrapper';
+import { useSettings } from '../hooks/useSettings.js';
 import Modal from '../features/modal/components/modal.jsx';
 import { openModal } from '../features/modal/modalSlice.js';
 import Avatar from '../features/users/components/avatar.jsx';
+import { useThemeSettings } from '../hooks/useThemeSettings';
 import UserProfileForm from '../features/users/components/userProfileForm.jsx';
-import { updateUserProfile, fetchUserProfile } from '../features/users/usersThunks';
 
 const Settings = () => {
   const dispatch = useDispatch();
-  const { theme, setTheme } = useTheme();
-  const [avatarFile, setAvatarFile] = useState(null);
-  const user = useSelector((state) => state.auth.user);
-  const profile = useSelector(state => state.user.selectedUser);
   const isOpen = useSelector((state) => state.modal.modals['profile']?.isOpen);
+  
+  const {
+    state: { user, profile },
+    actions: { handleFileChange, updateUserProfileHandler }
+  } = useSettings();
 
-
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setAvatarFile(file);
-      await uploadAvatar();
-    }
-  };
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
-
-  const handleThemeChange = (e) => {
-    setTheme(e.target.value);
-  };
-
-  useEffect(() => {
-    if(user) {
-      dispatch(fetchUserProfile(user.id))
-    }
-  }, [dispatch, user])
-
-  const updateUserProfileHandler = (userProfile) => {
-    dispatch(updateUserProfile({ userProfile, userId: user.id }))
-  }
-
-
-  const uploadAvatar = async () => {
-    if (!avatarFile) return;
-
-    const fileExt = avatarFile.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `avatars/${fileName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from('avatars')
-      .upload(filePath, avatarFile);
-
-    if (uploadError) {
-      throw new Error('Error uploading avatar:', uploadError.message);
-    } else {
-      const { publicURL, error } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(filePath);
-
-      if (error) {
-        throw new Error('Error getting public URL:', error.message);
-      } else {
-        await updateAvatarInDatabase(user.id, publicURL);
-      }
-    }
-  };
-
-  const updateAvatarInDatabase = async (userId, avatarUrl) => {
-    const { error } = await supabase
-      .from('profiles')
-      .update({ avatar_url: avatarUrl })
-      .eq('id', userId);
-
-    if (error) throw new Error('Error updating avatar:', error.message);
-  };
+  const {
+    theme,
+    handleThemeChange
+  } = useThemeSettings();
 
   const renderProfile = (contentProps) => (
     <UserProfileForm 
-    {...contentProps} 
-    profile={profile}
-    updateUserProfile= {updateUserProfileHandler}
+      {...contentProps} 
+      profile={profile}
+      updateUserProfile={updateUserProfileHandler}
     />
-  )
+  );
   
   return (
     <>
     <div className="px-4 lg:px-8 pb-24 lg:pb-8">
-      <h1 className="capitalize text-3xl mb-4 font-medium">settings</h1>
+      <h1 className="capitalize text-2xl lg:text-3xl mb-4 font-medium lg:font-bold">settings</h1>
       <div className='grid grid-col-1 lg:grid-cols-3 gap-4 lg:gap-8'>
         <CardWrapper
         containerClass={'lg:col-span-2'}
         title={'General Settings'}
-        titleClass={'text-xl'}
+        titleClass={'text-xl font-semibold'}
         subtitle={'update your contact and how people can contact you down below'}
         subtitleClass={'lowercase text-sm'}
         >
@@ -114,7 +54,7 @@ const Settings = () => {
           </div> 
           <div className='my-6'>
             <div className='flex justify-between items-center'>
-              <h1 className='text-lg font-medium'>Profile details</h1>
+              <h1 className='text-lg font-semibold'>Profile details</h1>
               <button className='btn-ghost text-blue-400 btn-sm hover:bg-transparent' onClick={() => dispatch(openModal({
                 id: 'profile',
                 title: 'Update Profile',
@@ -152,15 +92,15 @@ const Settings = () => {
               </label>
             </div>
           </div>
-          <div className='my-6'>
-            <h1 className='text-lg font-medium capitalize'>languages</h1>
+          <div className='my-8'>
+            <h1 className='text-lg font-semibold capitalize'>languages</h1>
             <div className='flex justify-between my-2 items-center'>
               <p className='text-sm'>English</p>
               <button className='btn-outline p-1 btn-ghost btn-sm hover:bg-transparent border-gray-400 text-gray-500 hover:text-black hover:border-gray-400'>Change</button>
             </div>
           </div>
-          <div className='my-6'>
-            <h1 className='text-lg font-medium capitalize'>app appearance</h1>
+          <div className='my-8'>
+            <h1 className='text-lg font-semibold capitalize'>app appearance</h1>
             <div className='flex'>
               <label className="label cursor-pointer">
                 <input 

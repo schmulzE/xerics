@@ -4,6 +4,20 @@ import { createProject, fetchProjects, fetchProjectById, updateProject, deletePr
 const initialState = {
   projects: [],
   selectedProject: null,
+  counts: {
+    'in progress': 0,
+    done: 0,
+    'in review': 0,
+    todo: 0,
+    'total projects': 0
+  },
+  rates: {
+    'in progress': 0,
+    done: 0,
+    'in review': 0,
+    todo: 0,
+    'total projects': 0
+  },
   loading: false,
   error: null
 };
@@ -16,6 +30,12 @@ const projectSlice = createSlice({
       state.selectedProject = null;
       state.loading = false;
       state.error = null;
+    },
+     setCounts(state, action) {
+      state.counts = action.payload;
+    },
+    setRates(state, action) {
+      state.rates = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -81,7 +101,7 @@ const projectSlice = createSlice({
 });
 
 // eslint-disable-next-line no-empty-pattern
-export const { resetProjectState } = projectSlice.actions;
+export const { resetProjectState, setCounts, setRates } = projectSlice.actions;
 export const projects = (state) => state.projects.projects;
 export const selectedProject = (state) => state.projects.selectedProject;
 export default projectSlice.reducer;

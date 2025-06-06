@@ -19,17 +19,23 @@ export const useInfiniteScroll = (table, pageSize = 10, tab = null, searchQuery,
       }
 
       // Apply sorting based on sortConfig
-      const sortColumn = sortConfig.sortBy.toLowerCase();
-      const sortDirection = sortConfig.sortOrder.toLowerCase() === 'ascending';
+      const sortColumn =
+      sortConfig.sortBy.toLowerCase() === 'alphabetical'
+      ? 'name'
+      : sortConfig.sortBy.toLowerCase() === 'due date'
+      ? 'due_date'
+      : sortConfig.sortBy.toLowerCase();
+
+      // const sortColumn = sortConfig.sortBy == 'Alphabetical' ? 'name' : sortConfig.sortBy.toLowerCase();
+      // const sortDirection = sortConfig.sortOrder.toLowerCase() === 'ascending';
 
       query = query
         .range(pageParam * pageSize, (pageParam + 1) * pageSize - 1)
-        .order(sortColumn, { ascending: sortDirection });
+        .order(sortColumn);
 
       const { data, error } = await query;
 
       if (error) {
-        console.error('Supabase query error:', error);
         throw error;
       }
 
